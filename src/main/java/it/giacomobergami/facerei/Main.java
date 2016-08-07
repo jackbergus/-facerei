@@ -15,11 +15,11 @@ public class Main {
 
         // Main request center
         // --> The list of all the possible results
-        server.createContext("/",new HTMLPage("chicopisco.html"));
+        server.createContext("/",new HTMLPage("index.html"));
         // --> Integrate all the possible different data
-        server.createContext("/integrate",new HTMLPage("chicopisco_viho.html"));
+        //server.createContext("/integrate",new HTMLPage("chicopisco_viho.html"));
         // --> Aggregate all the possible configurations
-        server.createContext("/aggregate",new HTMLPage("chicopisco_paiura.html"));
+        //server.createContext("/aggregate",new HTMLPage("chicopisco_paiura.html"));
 
         //////////
         // Provides the autocompletion of the tags getting the informations from the XML documents

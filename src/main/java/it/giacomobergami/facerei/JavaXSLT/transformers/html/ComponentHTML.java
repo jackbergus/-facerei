@@ -32,6 +32,7 @@ public class ComponentHTML extends HTMLTransformer.Transform{
         dest.addElement("a")
                 .addAttribute("href","#")
                 .addAttribute("onclick","toggler('newboxes-"+counter+"');")
+                .addAttribute("class","linkate")
                 .addText("{"+id+"}"+name+": "+abstr);
 
         Element content = dest.addElement("div")
