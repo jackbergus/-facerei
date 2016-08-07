@@ -172,7 +172,7 @@ public class Integrate implements HttpHandler {
                 }
 
                 Document docR = DocumentHelper.createDocument();
-                Element resultsR = docR.addElement("div").addAttribute("id", "aggregation");
+                Element resultsR = docR.addElement("div").addAttribute("id", "rIntegrate");
 
 
 

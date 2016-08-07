@@ -1,5 +1,7 @@
 <html>
     <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>*Facerei</title>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
         <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"> </script>
@@ -56,13 +58,13 @@
                     var newelem = $('<p id="etag'+x+'"/>');
                     var in_newelem = $('<input type="text" class="country" id="'+x+'"/>');
                     in_newelem.autocomplete(autocompleteFun);
-                    var btag = $('b');
+                    var btag = $('<b />');
                     btag.text("Tag:");
                     newelem.append(btag);
-                    var bval = $('b');
+                    newelem.append(in_newelem);
+                    var bval = $('<b />');
                     bval.text("Value:");
                     newelem.append(bval);
-                    newelem.append(in_newelem);
                     newelem.append($('<input type="text" id="tagconstr'+x+'"/>'));
                     $(wrapper).append(newelem); //add input box
                 }
@@ -72,6 +74,8 @@
                 e.preventDefault(); $("#etag"+x).remove(); x--;
             })
               $('.ajaxform').submit( function() {
+                // Getting all the fields from the form. Puttin' them inside
+                // an object
                 var obj = {};
                 $('.country').each(function(){
                     var cur = $(this).val();
@@ -81,10 +85,30 @@
                       url     : "/request",
                       type    : "POST",
                       data    : obj,
+                      async: false,
                       success : function( response ) {
                                   $("#results").replaceWith(response);
                                 }
                   });
+                  $.ajax({
+                      url     : "/rIntegrate",
+                      type    : "POST",
+                      data    : obj,
+                      async: false,
+                      success : function( response ) {
+                                  $("#rIntegrate").replaceWith(response);
+                                }
+                  });
+                  $.ajax({
+                      url     : "/rAggregate",
+                      type    : "POST",
+                      data    : obj,
+                      async: false,
+                      success : function( response ) {
+                                  $("#rAggregate").replaceWith(response);
+                                }
+                  });
+                  $( "#tabs").tabs("refresh");
                   return false;
               });
                 $(".country").autocomplete(autocompleteFun);
@@ -97,6 +121,7 @@
                       return $(content).children(".popover-body").html();
                     }
                 });
+                $( "#tabs" ).tabs();
                 //////
             });
         });
@@ -114,15 +139,25 @@
               <legend>Traversal information</legend>
                 <p><button class="add_field_button">Add a tag</button>
                 <a href="#" class="remove_field">Remove</a></p>
-
-                <!--<p><input type="text" id="tag1" class="country"/></p>-->
             </fieldset>
             <button type="submit" class="btn btn-default">Send</button>
         </form>
         <div role=form>
           <legend>Query Result</legend>
-        <div id="results">
-        </div>
+
+        <div id="tabs">
+  <ul>
+    <li><a href="#results">Single Documents</a></li>
+    <li><a href="#rIntegrate">Integrated Documents</a></li>
+    <li><a href="#rAggregate">Aggregated Documents</a></li>
+  </ul>
+  <div id="results">
+      </div>
+  <div id="rIntegrate">
+      </div>
+  <div id="rAggregate">
+      </div>
+</div>
       </div>
     </body>
 </html>
