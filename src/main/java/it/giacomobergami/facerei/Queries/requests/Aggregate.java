@@ -27,6 +27,7 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Aggregate implements HttpHandler {
 
@@ -38,10 +39,14 @@ public class Aggregate implements HttpHandler {
 
     public Optional<String> supremum(Tree<String> tee, Collection<String> toSupremum) {
         boolean cond = toSupremum.contains(tee.getValue());
+        long count = -1;
+        String sibling1 = null;
         if (!cond && (!tee.isLeaf())) {
-            cond = tee.siblings.stream().map(x->supremum(x,toSupremum)).filter(x->x.isPresent()).count()>0;
+            count = tee.siblings.stream().map(x -> supremum(x, toSupremum)).filter(x -> x.isPresent()).count();
+            if (count==1) sibling1 = tee.siblings.stream().map(x -> supremum(x, toSupremum)).filter(x -> x.isPresent()).findFirst().get().get();
+            cond = count>0;
         }
-        return cond ? Optional.of(tee.getValue()) : Optional.empty();
+        return cond ? Optional.of(count == 1 ? sibling1 : tee.getValue()) : Optional.empty();
     }
 
     private void enrichTree(Tree<String> tee, JsonElement element) {
