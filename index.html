@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Facerei</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"> </script>
+   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" /><style>
+   .newboxes{
+     display:none;
+     border: 5px solid;
+     padding-left : 20px;
+   }
+   </style>
+</head>
+<body>
+
+  <form name="modulo">
+      <p>Nome</p>
+      <p><input type="text" name="nome" id="nome"></p>
+      <p>Cognome</p>
+      <p><input type="text" name="cognome" id="cognome"></p>
+      <input type="button" id="bottone" value="Invia i dati">
+  </form>
+
+  <div id="risultato"></div>
+
+
+<script>
+function toggler(divId) {
+      $("#" + divId).toggle();
+}
+
+$(document).popover({
+    selector: '[data-toggle=popover]',
+    trigger: 'focus'
+});
+
+$(document).ready(function() {
+  $("#bottone").click(function(){
+    var nome = $("#nome").val();
+    var cognome = $("#cognome").val();
+    $.ajax({
+      type: "POST",
+      url: "request",
+      data: "nome=" + nome + "&cognome=" + cognome,
+      dataType: "html",
+      success: function(msg)
+      {
+        $("#risultato").html(msg);
+      },
+      error: function()
+      {
+        alert("Chiamata fallita, si prega di riprovare...");
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+<component id="1" name="Scarlatti" abstract="This is the biography of Scarlatti">
+    Scarlatti was a  <tag folk="people/nationality">Italian</tag> composer born in
+    <tag folk="people/year of birth">1685</tag> in
+    <tag folk="people/place of birth">Naples</tag>.
+    He made some works for <tag folk="works/instrument">harpsichord</tag>
+    and <tag folk="works/instrument">orchestra</tag>.
+</component>

@@ -1,0 +1,12 @@
+<component id="1" name="Incipit" abstract="This is the incipit">
+    Lorem ipsum <tag graph="2" folk="quam/si">quam si</tag> dolet
+    <component id="2" name="Definition2" abstract="A definition">
+        Some other <tag folk="dumb">useless</tag> text.
+    </component>
+    Dolet dolet
+    <component id="3" name="Definition3" abstract="Yet another definition">
+        Some other <component id="4" name="Pointless" abstract="A pointless definition">
+        Some other <tag graph="1">pointless</tag> text.
+    </component> nesting.
+    </component>
+</component>

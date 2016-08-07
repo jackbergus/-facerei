@@ -1,0 +1,11 @@
+<component id="1" name="Buxtehude" abstract="This is the incipit">
+  Bach was a  <tag folk="people/nationality">German</tag> composer born in
+  <tag folk="people/year of birth">1637</tag> in
+  <tag folk="people/place of birth">Helsingborg</tag>.
+
+    <!-- First branch of the tree -->
+    <component id="2" name="Definition2" abstract="Works">
+        He made some works for <tag folk="works/instrument">organ</tag>.
+    </component>
+
+</component>

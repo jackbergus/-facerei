@@ -1,0 +1,12 @@
+<component id="1" name="Bach" abstract="This is the incipit">
+    Bach was a  <tag folk="people/nationality">German</tag> composer born in
+    <tag folk="people/year of birth">1685</tag> in
+    <tag folk="people/place of birth">Eisenach</tag>.
+    He made some works for <tag folk="works/instrument">organ</tag>,
+    <tag folk="works/instrument">harpsichord</tag> and <tag folk="works/instrument">orchestra</tag>.
+
+    <component id="1" name="Biography" abstract="Biography">
+        When Bach was young, he walked for miles to hear a concert by
+        <tag folk="people/name" graph="Buxtehude.xml">Buxtehude</tag>
+    </component>
+</component>

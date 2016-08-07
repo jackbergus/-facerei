@@ -1,0 +1,130 @@
+<html>
+    <head>
+      <title>*Facerei</title>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"> </script>
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"> </script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"> </script>
+          <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" />
+          <style>
+      .newboxes{
+        display:none;
+        border: 5px solid;
+        padding-left : 20px;
+      }
+      .ajaxform{
+        border: 5px solid;
+        margin : 20px;
+      }
+        </style>
+
+
+        <script type="text/javascript">
+        function toggler(divId) {
+            $("#" + divId).toggle();
+
+        }
+
+        $(document).ready(function() {
+            $(function() {
+              //////
+              var max_fields      = 10; //maximum input boxes allowed
+              var wrapper         = $(".ui-widget"); //Fields wrapper
+              var add_button      = $(".add_field_button"); //Add button ID
+
+              var autocompleteFun = {
+                  source: function(request, response) {
+                      $.ajax({
+                          url: "/autocomplete",
+                          type: "POST",
+                          data: { term: request.term },
+
+                          dataType: "json",
+
+                          success: function(data) {
+                              response(data);
+                          }
+                     });
+                  }
+              };
+
+              var x = 0; //initlal text box count
+            $(add_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                if(x < max_fields){ //max input box allowed
+                    x++; //text box increment
+                    var newelem = $('<p id="etag'+x+'"/>');
+                    var in_newelem = $('<input type="text" class="country" id="'+x+'"/>');
+                    in_newelem.autocomplete(autocompleteFun);
+                    var btag = $('b');
+                    btag.text("Tag:");
+                    newelem.append(btag);
+                    var bval = $('b');
+                    bval.text("Value:");
+                    newelem.append(bval);
+                    newelem.append(in_newelem);
+                    newelem.append($('<input type="text" id="tagconstr'+x+'"/>'));
+                    $(wrapper).append(newelem); //add input box
+                }
+            });
+
+            $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $("#etag"+x).remove(); x--;
+            })
+              $('.ajaxform').submit( function() {
+                var obj = {};
+                $('.country').each(function(){
+                    var cur = $(this).val();
+                    obj[cur] = $("#tagconstr"+$(this).attr('id')).val();
+                });
+                  $.ajax({
+                      url     : "/rIntegrate",
+                      type    : "POST",
+                      data    : obj,
+                      success : function( response ) {
+                        alert(response);
+                                  $("#results").replaceWith(response);
+                                }
+                  });
+                  return false;
+              });
+                $(".country").autocomplete(autocompleteFun);
+                $(document).popover({
+                    html : true,
+                    selector: '[data-toggle=popover]',
+                    trigger: 'focus',
+                    content: function() {
+                      var content = $(this).attr("data-popover-content");
+                      return $(content).children(".popover-body").html();
+                    }
+                });
+                //////
+            });
+        });
+
+        </script>
+    </head>
+
+    <body>
+      <H1>*Facerei</H1>
+      <H2>A misspelled data integration tool</H2>
+      <H3>Aggregating all the documents into a same text file. All the users'
+      features are listed in a table (refresh)</H3>
+      <H4>Giacomo Bergami &copy; 2016 - GLP3</H4>
+        <form class="ajaxform" role="form">
+            <fieldset class="ui-widget">
+              <legend>Traversal information</legend>
+                <p><button class="add_field_button">Add a tag</button>
+                <a href="#" class="remove_field">Remove</a></p>
+
+                <!--<p><input type="text" id="tag1" class="country"/></p>-->
+            </fieldset>
+            <button type="submit" class="btn btn-default">Send</button>
+        </form>
+        <div role=form>
+          <legend>Query Result</legend>
+        <div id="results">
+        </div>
+      </div>
+    </body>
+</html>

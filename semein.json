@@ -1,0 +1,32 @@
+{
+  "people/nationality" : {
+    "a": "They had the following nationality:",
+    "ontology": {
+      "European" :{
+        "South European" : ["Italian","Spanish"],
+        "North European" : ["German"]
+      }
+    }
+  },
+  "people/year of birth" : {
+    "a": "They were born on the",
+    "ontology": {
+      "17th Century" : ["1685","1637"]
+    }
+  },
+  "people/place of birth" : {
+    "a": "in"
+  },
+  "works/instrument" : {
+    "a": ". They made works for: ",
+    "ontology" : {
+      "both solo and ensembles" : {
+        "key instruments" : ["organ","harpsichord"],
+        "ensemble": ["orchestra"]
+      }
+    }
+  },
+  "people/name" : {
+    "a": "Was somehow related with"
+  }
+}

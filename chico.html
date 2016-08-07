@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.js"> </script>
+        <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"> </script>
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+
+        <script type="text/javascript">
+
+        $(document).ready(function() {
+            $(function() {
+              //////
+              var max_fields      = 10; //maximum input boxes allowed
+              var wrapper         = $(".ui-widget"); //Fields wrapper
+              var add_button      = $(".add_field_button"); //Add button ID
+
+              var x = 1; //initlal text box count
+            $(add_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                if(x < max_fields){ //max input box allowed
+                    x++; //text box increment
+                    $(wrapper).append('<input type="text" id="tag'+x+'"/>'); //add input box
+                }
+            });
+
+            $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $("#tag"+x).remove(); x--;
+            })
+              $('.ajaxform').submit( function() {
+                  $.ajax({
+                      url     : "/request",
+                      type    : "GET",
+                      data    : $(this).serialize(),
+                      success : function( response ) {
+                                  alert( response );
+                                }
+                  });
+                  return false;
+              });
+                $(".country").autocomplete({
+                    source: function(request, response) {
+                        $.ajax({
+                            url: "/autocomplete",
+                            type: "POST",
+                            data: { term: request.term },
+
+                            dataType: "json",
+
+                            success: function(data) {
+                                response(data);
+                            }
+                       });
+                    }
+                });
+                //////
+            });
+        });
+
+        </script>
+    </head>
+
+    <body>
+        <form class="ajaxform">
+            <div class="ui-widget">
+                <p><button class="add_field_button">Add More Fields</button>
+                <a href="#" class="remove_field">Remove</a></p>
+
+                <input type="text" id="tag1" class="country"/>
+            </div>
+            <button type="submit" class="btn btn-default">Send</button>
+        </form>
+        <div id="results">
+        </div>
+    </body>
+</html>
