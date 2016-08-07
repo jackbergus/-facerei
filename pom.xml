@@ -15,13 +15,8 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    
                 </configuration>
-                <archive>
-                    <manifest>
-                        <addClasspath>true</addClasspath>
-                        <mainClass>it.giacomobergami.facerei.Main</mainClass>
-                    </manifest>
-                </archive>
             </plugin>
 
         </plugins>
